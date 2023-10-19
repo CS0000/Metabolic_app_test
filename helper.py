@@ -55,7 +55,6 @@ test = p.loc[:,['Category_L4_LCA','Quantity', 'Land Use (m2)','Land Transformati
 
 
 test1 = test.groupby(['Category_L4_LCA']).sum() # Harvest_Country
-st.dataframe(test1.head(10))
 test1_ra = test1.div(test1.sum(axis=0),axis=1).reset_index() 
 all_C4 = test1.index.tolist()
 all_col = test1.columns.tolist()
