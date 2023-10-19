@@ -50,7 +50,7 @@ metabolic_template = dict(layout=go.Layout(font_family='Roboto',
 
 # load data
 p = pd.read_csv('./Phase1_processed_dataset_pressures - Long_data_with_pressures_v2.csv')
-test = p.loc[:,['Category_L4_LCA','Harvest_Country','Quantity', 'Land Use (m2)','Land Transformation (m2)','Water Use (m3)','Soil Pollution (kg SO2 eq)', 'Water Pollution (kg P eq)',]]
+test = p.loc[:,['Category_L4_LCA','Quantity', 'Land Use (m2)','Land Transformation (m2)','Water Use (m3)','Soil Pollution (kg SO2 eq)', 'Water Pollution (kg P eq)',]]
 
 
 test1 = test.groupby(['Category_L4_LCA']).sum() # Harvest_Country
