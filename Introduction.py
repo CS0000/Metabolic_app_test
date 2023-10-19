@@ -1,6 +1,8 @@
+st.set_page_config(layout="wide")
+
 from helper import *
 
-st.set_page_config(layout="wide")
+
 
 # tabs_font_css = """
 # <style>
