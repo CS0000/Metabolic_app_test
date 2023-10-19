@@ -1,5 +1,5 @@
 plotly
-annotated_text
+st-annotated-text
 folium
 streamlit_folium
 pickle
