@@ -1,6 +1,6 @@
 from helper import *
 
-st.set_page_config(layout="wide")
+
 st.header('this is overview page')
 
 

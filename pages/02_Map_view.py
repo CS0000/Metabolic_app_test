@@ -4,7 +4,7 @@ import plotly.express as px
 import streamlit as st
 
 
-st.set_page_config(layout="wide")
+
 st.header('this is map view page')
 @st.cache(allow_output_mutation=True)
 
