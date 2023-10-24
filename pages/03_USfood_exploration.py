@@ -29,7 +29,7 @@ df_fig_in_id = 'df_RA_final_HICL_splitCountry'
 
 url_df = f"https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet={df_id}"
 url_match = f"https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet={lookup_id}"
-url_df_fig_in = f"https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet={lookup_id}"
+url_df_fig_in = f"https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet={df_fig_in_id}"
 
 # df_RA_final = pd.read_csv(url_df)
 # match_df = pd.read_csv(url_match)
