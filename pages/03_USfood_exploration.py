@@ -34,8 +34,8 @@ url_df_fig_in = f"https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=
 # df_RA_final = pd.read_csv(url_df)
 # match_df = pd.read_csv(url_match)
 df_RA_final_HICL_splitCountry = pd.read_csv(url_df_fig_in)
-print(df_RA_final_HICL_splitCountry.columns)
-print(df_RA_final_HICL_splitCountry.head())
+st.write(df_RA_final_HICL_splitCountry.columns)
+st.dataframe(df_RA_final_HICL_splitCountry.head())
 
 df = df_RA_final_HICL_splitCountry.loc[:,['HICL','Merch Category','PIM Group','Net Weight Received','Country of Origin']]
 df = df.loc[(df['HICL'].notnull())&(df['HICL']!=''),:]
