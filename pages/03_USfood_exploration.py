@@ -67,11 +67,11 @@ select_list = st.multiselect(
     ['Sugarcane','Rice'])
 df_select = df.loc[df['HICL'].isin(select_list),:]
 
-fig_select_pie = pie_chart(df_select,gp_bin=True,gp='PIM Group',
-                           topn=20,value='Net Weight Received')
+for i in ['PIM Group','Merch Category']:
+    fig_select_pie = pie_chart(df_select,gp_bin=True,gp=i,
+                            topn=20,value='Net Weight Received')
+    st.plotly_chart(fig_select_pie, use_container_width=True)
 
-fig_select_pie = pie_chart(df_select,gp_bin=True,gp='Merch Category',
-                           topn=20,value='Net Weight Received')
 
 
     
