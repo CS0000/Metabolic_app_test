@@ -70,7 +70,7 @@ st.header("Breakdwon HICL into PIM Group & Merch Category")
 select_list = st.multiselect(
     'select HICL',
     df['HICL'].unique().tolist(),
-    ['Sugarcane','Rice'])
+    ['Poultry'])
 df_select = df.loc[df['HICL'].isin(select_list),:]
 
 for i in ['PIM Group','Merch Category']:
