@@ -48,6 +48,7 @@ df_hicl_fig = df.groupby('HICL').sum().reset_index().sort_values('Net Weight Rec
  
 # df_hicl_fig = df_filter.groupby('HICL').sum().reset_index().sort_values('Net Weight Received',ascending=False)
 fig_hicl_pie = pie_chart(df_hicl_fig,gp_bin=False,gp='HICL',value='Net Weight Received')
+fig_hicl_pie.update_layout(margin=dict(t=0, b=0, l=0, r=0))
 st.plotly_chart(fig_hicl_pie, use_container_width=True)
 
 fig_hicl_bar = px.bar(df_hicl_fig,
@@ -70,6 +71,7 @@ df_select = df.loc[df['HICL'].isin(select_list),:]
 for i in ['PIM Group','Merch Category']:
     fig_select_pie = pie_chart(df_select,gp_bin=True,gp=i,
                             topn=20,value='Net Weight Received')
+    fig_select_pie.update_layout(margin=dict(t=0, b=0, l=0, r=0))
     st.plotly_chart(fig_select_pie, use_container_width=True)
 
 
