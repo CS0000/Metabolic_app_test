@@ -34,36 +34,44 @@ url_df_fig_in = f"https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=
 # df_RA_final = pd.read_csv(url_df)
 # match_df = pd.read_csv(url_match)
 df_RA_final_HICL_splitCountry = pd.read_csv(url_df_fig_in)
-st.write(df_RA_final_HICL_splitCountry.columns)
-st.dataframe(df_RA_final_HICL_splitCountry.head())
+
 
 df = df_RA_final_HICL_splitCountry.loc[:,['HICL','Merch Category','PIM Group','Net Weight Received','Country of Origin']]
 df = df.loc[(df['HICL'].notnull())&(df['HICL']!=''),:]
 
-# select_list = ['Sugarcane','Rice']
-relative = st.sidebar.checkbox('Proportional Pie plot')
+# fig = make_subplots(rows=2, cols=1)
 
-select_list = st.sidebar.multiselect(
+
+# all HICL categories pie & bar chart
+st.write("Net Weight Received - All HICL")
+df_hicl_fig = df.groupby('HICL').sum().reset_index().sort_values('Net Weight Received',ascending=False)
+ 
+# df_hicl_fig = df_filter.groupby('HICL').sum().reset_index().sort_values('Net Weight Received',ascending=False)
+fig_hicl_pie = pie_chart(df_hicl_fig,gp_bin=False,gp='HICL',value='Net Weight Received')
+st.plotly_chart(fig_hicl_pie, use_container_width=True)
+
+fig_hicl_bar = px.bar(df_hicl_fig,
+                x='HICL', y='Net Weight Received',
+                title=f"Net Weight Received - HICL")
+fig_hicl_bar.update_xaxes(tickangle=75)
+fig_hicl_bar.update_traces(marker_color='#b52451')
+st.plotly_chart(fig_hicl_bar, use_container_width=True)
+
+
+# breakdown HICL- PIM Group and Merch Category
+# select_list = ['Sugarcane','Rice']
+st.write("Breakdwon HICL into PIM Group & Merch Category")
+select_list = st.multiselect(
     'select HICL',
     df['HICL'].unique().tolist(),
     ['Sugarcane','Rice'])
+df_select = df.loc[df['HICL'].isin(select_list),:]
 
-# fig = make_subplots(rows=2, cols=1)
+fig_select_pie = pie_chart(df_select,gp_bin=True,gp='PIM Group',
+                           topn=20,value='Net Weight Received')
 
-df_filter = df.loc[df['HICL'].isin(select_list),:]
-df_hicl_fig = df_filter.groupby('HICL').sum().reset_index().sort_values('Net Weight Received',ascending=False)
- 
-if relative:
-    # df_hicl_fig = df_filter.groupby('HICL').sum().reset_index().sort_values('Net Weight Received',ascending=False)
-    fig_hicl = pie_chart(df_hicl_fig,gp_bin=False,gp='HICL',value='Net Weight Received')
-    
-else:
-   fig_hicl = px.bar(df_hicl_fig,
-                 x='HICL', y='Net Weight Received',
-                 title=f"Net Weight Received - HICL")
-
-st.plotly_chart(fig_hicl, use_container_width=True)
-   
+fig_select_pie = pie_chart(df_select,gp_bin=True,gp='Merch Category',
+                           topn=20,value='Net Weight Received')
 
 
     
