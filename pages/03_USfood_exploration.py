@@ -74,7 +74,7 @@ select_list = st.multiselect(
 df_select = df.loc[df['HICL'].isin(select_list),:]
 
 for i in ['PIM Group','Merch Category']:
-    st.subheader(f"Breakdwon HICL into {i}",divider='grey')
+    st.subheader(f"Breakdwon HICL into {i}, top 20 ingredients",divider='grey')
     fig_select_pie = pie_chart(df_select,gp_bin=True,gp=i,
                             topn=20,value='Net Weight Received')
     fig_select_pie.update_layout(margin=dict(t=0, b=0, l=0, r=0))
@@ -84,16 +84,3 @@ for i in ['PIM Group','Merch Category']:
 
 
     
-
-
-# fig_pim = px.bar(df_filter.groupby('PIM Group').sum().reset_index().sort_values('Net Weight Received',ascending=False).iloc[0:20,:],
-#                  x='PIM Group', y='Net Weight Received',
-#                  title=f"Net Weight Received - PIM Group")
-# fig_merch = px.bar(df_filter.groupby('Merch Category').sum().reset_index().sort_values('Net Weight Received',ascending=False).iloc[0:20,:],
-#                    x='Merch Category', y='Net Weight Received',
-#                    title=f"Net Weight Received - Merch Category")
-
-# for fig in [fig_pim,fig_merch]:
-#     fig.update_xaxes(tickangle=75)
-#     fig.update_traces(marker_color='#b52451')
-#     st.plotly_chart(fig, use_container_width=True)
