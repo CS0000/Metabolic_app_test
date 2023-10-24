@@ -55,14 +55,14 @@ fig_hicl_bar = px.bar(df_hicl_fig,
 fig_hicl_bar.update_xaxes(tickangle=75)
 fig_hicl_bar.update_traces(marker_color='#b52451')
 st.plotly_chart(fig_hicl_bar, use_container_width=True)
-st.text("<br>")
+st.write("  \n")
 st.subheader('Pie plot: Net Weight Received - All HICL',divider='gray')
 fig_hicl_pie = pie_chart(df_hicl_fig,gp_bin=False,gp='HICL',value='Net Weight Received')
 fig_hicl_pie.update_layout(margin=dict(t=0, b=0, l=0, r=0))
 st.plotly_chart(fig_hicl_pie, use_container_width=True)
 
-st.text("<br>")
-st.text("<br>")
+st.write("  \n")
+st.write("  \n")
 
 # breakdown HICL- PIM Group and Merch Category
 # select_list = ['Sugarcane','Rice']
@@ -79,7 +79,7 @@ for i in ['PIM Group','Merch Category']:
                             topn=20,value='Net Weight Received')
     fig_select_pie.update_layout(margin=dict(t=0, b=0, l=0, r=0))
     st.plotly_chart(fig_select_pie, use_container_width=True)
-    st.text("<br>")
+    st.write("  \n")
 
 
 
