@@ -8,7 +8,7 @@ import folium
 from streamlit_folium import st_folium
 import pickle
 
-st.set_page_config(layout="wide")
+
 color_map = {'Agave': '#d5de81',
              'Aniseed': '#CCAB62',
              'Barley':'#fccb7d',
