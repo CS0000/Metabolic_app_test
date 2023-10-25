@@ -73,6 +73,14 @@ select_list = st.multiselect(
     ['Poultry'])
 df_select = df.loc[df['HICL'].isin(select_list),:]
 
+# PIM/merch/product counting in each HICL
+for h in select_list:
+   st.write(h)
+   st.write(f"PIM group count: {len(df_select.loc[df_select['HICL']==h,'PIM Group'].unique())}")
+   st.write(f"Merch category count: {len(df_select.loc[df_select['HICL']==h,'Merch Category'].unique())}")
+   st.write(f"products count: {len(df_select.loc[df_select['HICL']==h,:].shape[0])}")
+   
+
 for i in ['PIM Group','Merch Category']:
     st.subheader(f"Breakdwon HICL into {i}, top 20 ingredients",divider='grey')
     fig_select_pie = pie_chart(df_select,gp_bin=True,gp=i,
