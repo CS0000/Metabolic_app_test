@@ -33,15 +33,14 @@ url_df = f"https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv
 url_match = f"https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet={lookup_id}"
 url_df_fig_in = f"https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet={df_fig_in_id}"
 
-# df_RA_final = pd.read_csv(url_df)
-# match_df = pd.read_csv(url_match)
 df_RA_final_HICL_splitCountry = pd.read_csv(url_df_fig_in)
 
 
-df = df_RA_final_HICL_splitCountry.loc[:,['HICL','Merch Category','PIM Group','Net Weight Received','Country of Origin']]
+cols = ['HICL','Merch Category','PIM Group','Net Weight Received',
+        'Country of Origin','Product Description']
+df = df_RA_final_HICL_splitCountry.loc[:,cols]
 df = df.loc[(df['HICL'].notnull())&(df['HICL']!=''),:]
 
-# fig = make_subplots(rows=2, cols=1)
 
 
 # all HICL categories pie & bar chart
@@ -56,16 +55,16 @@ fig_hicl_bar.update_xaxes(tickangle=75)
 fig_hicl_bar.update_traces(marker_color='#b52451')
 st.plotly_chart(fig_hicl_bar, use_container_width=True)
 st.write("  \n")
+
 st.subheader('Pie plot: Net Weight Received - All HICL',divider='gray')
 fig_hicl_pie = pie_chart(df_hicl_fig,gp_bin=False,gp='HICL',value='Net Weight Received')
 fig_hicl_pie.update_layout(margin=dict(t=0, b=0, l=0, r=0))
 st.plotly_chart(fig_hicl_pie, use_container_width=True)
+st.write("  \n")
+st.write("  \n")
 
-st.write("  \n")
-st.write("  \n")
 
 # breakdown HICL- PIM Group and Merch Category
-# select_list = ['Sugarcane','Rice']
 st.header("Breakdwon HICL into PIM Group & Merch Category")
 select_list = st.multiselect(
     'select HICL',
@@ -73,15 +72,16 @@ select_list = st.multiselect(
     ['Poultry'])
 df_select = df.loc[df['HICL'].isin(select_list),:]
 
-# PIM/merch/product counting in each HICL
+# PIM/merch/product counting in each HICL: summary dataframe
 df_count = pd.DataFrame()
 df_count.index = select_list
 for h in select_list:
    df_count.loc[h,'PIM group numbers'] = len(df_select.loc[df_select['HICL']==h,'PIM Group'].unique())
    df_count.loc[h,'Merch category numbers'] = len(df_select.loc[df_select['HICL']==h,'Merch Category'].unique())
-   df_count.loc[h,'Products numbers'] = df_select.loc[df_select['HICL']==h,:].shape[0]
+   df_count.loc[h,'Products numbers'] = len(df_select.loc[df_select['HICL']==h,'Product Description'].unique())
 st.dataframe(df_count)
 
+# breakdown pie plot
 for i in ['PIM Group','Merch Category']:
     st.subheader(f"Breakdwon HICL into {i}, top 20 ingredients",divider='grey')
     fig_select_pie = pie_chart(df_select,gp_bin=True,gp=i,
