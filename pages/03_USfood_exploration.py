@@ -74,12 +74,13 @@ select_list = st.multiselect(
 df_select = df.loc[df['HICL'].isin(select_list),:]
 
 # PIM/merch/product counting in each HICL
+df_count = pd.DataFrame()
+df_count.index = select_list
 for h in select_list:
-   st.write(h)
-   st.write(f"PIM group count: {len(df_select.loc[df_select['HICL']==h,'PIM Group'].unique())}")
-   st.write(f"Merch category count: {len(df_select.loc[df_select['HICL']==h,'Merch Category'].unique())}")
-   st.write(f"products count: {df_select.loc[df_select['HICL']==h,:].shape[0]}")
-
+   df_count.loc[h,'PIM group numbers'] = len(df_select.loc[df_select['HICL']==h,'PIM Group'].unique())
+   df_count.loc[h,'Merch category numbers'] = len(df_select.loc[df_select['HICL']==h,'Merch Category'].unique())
+   df_count.loc[h,'Products numbers'] = df_select.loc[df_select['HICL']==h,:].shape[0]
+st.dataframe(df_count)
 
 for i in ['PIM Group','Merch Category']:
     st.subheader(f"Breakdwon HICL into {i}, top 20 ingredients",divider='grey')
