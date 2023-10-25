@@ -6,7 +6,7 @@ import streamlit as st
 
 
 st.header('this is map view page')
-@st.cache(allow_output_mutation=True)
+
 
 def base_map():
     m = folium.Map(tiles='OpenStreetMap', 
