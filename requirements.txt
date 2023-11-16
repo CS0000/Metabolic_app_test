@@ -2,3 +2,6 @@ plotly
 st-annotated-text
 folium
 streamlit_folium
+st-gsheets-connection
+gspread
+st_ant_tree
