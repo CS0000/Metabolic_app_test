@@ -60,14 +60,14 @@ cred_path = './credentials.json'
 
 
 # load data
-p = pd.read_csv('./Phase1_processed_dataset_pressures - Long_data_with_pressures_v2.csv')
-test = p.loc[:,['Category_L4_LCA','Quantity', 'Land Use (m2)','Land Transformation (m2)','Water Use (m3)','Soil Pollution (kg SO2 eq)', 'Water Pollution (kg P eq)',]]
+# p = pd.read_csv('./Phase1_processed_dataset_pressures - Long_data_with_pressures_v2.csv')
+# test = p.loc[:,['Category_L4_LCA','Quantity', 'Land Use (m2)','Land Transformation (m2)','Water Use (m3)','Soil Pollution (kg SO2 eq)', 'Water Pollution (kg P eq)',]]
 
 
-test1 = test.groupby(['Category_L4_LCA']).sum() # Harvest_Country
-test1_ra = test1.div(test1.sum(axis=0),axis=1).reset_index() 
-all_C4 = test1.index.tolist()
-all_col = test1.columns.tolist()
+# test1 = test.groupby(['Category_L4_LCA']).sum() # Harvest_Country
+# test1_ra = test1.div(test1.sum(axis=0),axis=1).reset_index() 
+# all_C4 = test1.index.tolist()
+# all_col = test1.columns.tolist()
 
 with open('./geo_country_new.plk','rb') as f:
     l = pickle.load(f)
