@@ -28,7 +28,7 @@ df_id = 'df_RA_fianl'
 lookup_id = 'HICL%20Lookup'
 oil_id = 'Oils%20Lookup'
 df_fig_in_id = 'df_RA_final_HICL_splitCountry'
-WORK_SHEET_NAME = 'Included_Ingredients'
+# WORK_SHEET_NAME = 'Included_Ingredients'
 
 url_df = f"https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet={df_id}"
 url_match = f"https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet={lookup_id}"
@@ -36,8 +36,8 @@ url_df_fig_in = f"https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=
 
 # print(url_df_fig_in)
 # df_RA_final_HICL_splitCountry = pd.read_csv(url_df_fig_in)
-conn2 = st.connection("gsheets2",type=GSheetsConnection)
-df_RA_final_HICL_splitCountry = conn2.read(worksheet=WORK_SHEET_NAME)
+conn2 = st.connection("gsheets2",type='GSheetsConnection')
+df_RA_final_HICL_splitCountry = conn2.read(worksheet='Included_Ingredients')
 
 
 cols = ['HICL','Merch Category','PIM Group','Net Weight Received',
