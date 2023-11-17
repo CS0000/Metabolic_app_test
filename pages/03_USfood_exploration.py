@@ -36,7 +36,7 @@ url_df_fig_in = f"https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=
 
 # print(url_df_fig_in)
 # df_RA_final_HICL_splitCountry = pd.read_csv(url_df_fig_in)
-conn2 = st.connection("gsheets2",type='GSheetsConnection')
+conn2 = st.connection("gsheets2",type=GSheetsConnection)
 df_RA_final_HICL_splitCountry = conn2.read(worksheet='Included_Ingredients')
 
 
