@@ -29,8 +29,10 @@ final_col = f'{cate_cols[-1]}_Title'
 # pressure = pd.read_csv('./pages/Phase1_pressures - Long_data_with_pressures.csv')
 
 # pressure = read_credentials_sheet(SHEET_NAME,SHEET_ID)
-conn = st.connection("gsheets",type=GSheetsConnection)
-pressure = conn.read(worksheet=WORK_SHEET_NAME)
+
+conn1 = st.connection("gsheets1",type=GSheetsConnection)
+pressure = conn1.read(worksheet=WORK_SHEET_NAME)
+
 
 with st.expander('pressure data frame: '):
        st.dataframe(pressure.head())
