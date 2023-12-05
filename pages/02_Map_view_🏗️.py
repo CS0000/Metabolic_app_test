@@ -2,85 +2,102 @@ from helper import *
 from folium import Popup
 import plotly.express as px
 import streamlit as st
+from google.oauth2 import service_account
+from googleapiclient.discovery import build
+from googleapiclient.http import MediaIoBaseDownload
+import geopandas as gpd
+import fiona, tempfile
+import pickle,io
+import pydeck as pdk
 
-
-
+st.set_page_config(layout="wide")
 st.header('this is map view page')
 
-
-def base_map():
-    m = folium.Map(tiles='OpenStreetMap', 
-                   location=[41.38716817075619, 2.170044811509568],
-                   zoom_start=2)
-    return m
-
-
-# html file for the node on the map
-def plotly_graph():
-    categories = ['A', 'B', 'C']
-    values = [10, 20, 15]
-    fig = px.bar(x=categories, y=values, title="Sample Bar Plot")
-    fig.write_html('./test.html')
-
-# html -> folium popup
-def plotly_foPop():
-    # base map
-    with open('./test.html','r') as f:
-        html = f.read()
-    iframe = folium.IFrame(html=html,width=300,height=200)
-    popup = Popup(iframe,max_width=300)
-    # folium.Marker([30,110],popup=popup).add_to(m)
-    # st.session_state['map_created'] = True
-    return popup
+@st.cache_resource
+def drive_client():
+    creds = service_account.Credentials.from_service_account_info(
+        st.secrets["gcp_service_account"], 
+        # scopes=["https://www.googleapis.com/auth/drive.readonly"])
+        scopes = ['https://www.googleapis.com/auth/drive.metadata.readonly',
+          'https://www.googleapis.com/auth/drive',
+          'https://www.googleapis.com/auth/drive.file'])
+    return build('drive', 'v3', credentials=creds)
 
 
-def main():
-    if 'm' not in st.session_state:
-        st.session_state.m = base_map()
-        # popup = plotly_foPop()
-        # folium.Marker([30,110],popup=popup).add_to(st.session_state.m)
-        st_folium(st.session_state.m,use_container_width=True)
-        st.session_state.m = True
-    else:
-        st_folium(base_map(),use_container_width=True)
-
-if __name__ == '__main__':
-    main()
-
-# e = st.container()
-# m = base_map()
-# popup = plotly_foPop()
-# folium.Marker([30,110],popup=popup).add_to(m)
+@st.cache_data
+def load_from_drive(file_id):
+    service = drive_client()
+    request = service.files().get_media(fileId=file_id)
+    fh = io.BytesIO()
+    downloader = MediaIoBaseDownload(fh,request)
+    done = False
+    while not done:
+        _, done = downloader.next_chunk()
+    fh.seek(0)
+    return fh
 
 
-    
+data_load_state = st.text('Loading data...') 
+pickle_geojson_id = '1AZDR2F2vrBfw-f-l07Av-g1iXlz2alpG'
+fh = load_from_drive(pickle_geojson_id)
+
+data = pickle.load(fh)
+data_load_state.text('Loading data... done!')
 
 
 
+def gerate_map(data):
+    m = folium.Map(zoom_start=12)
+    folium.GeoJson(data).add_to(m)
+    # data_load_state.text('map object m done')
+    st_folium(m,width=1200,height=700,zoom=8)
+
+with st.form(key='sss'):
+    gerate_map(data)
+    submitted = st.form_submit_button("show map parameters")
+    if submitted:
+       st.write('map para')
+# view_state = pdk.ViewState(latitude=38,longitude=-122,zoom=3)
+# layer = pdk.Layer(
+#     "GeoJsonLayer",
+#     data=data,
+#     opacity=0.8,
+#     stroked=False,
+#     filled=True,
+#     extruded=False,
+#     get_line_color=[255,255,255]
+# )
+
+# st.pydeck_chart(pdk.Deck(map_style="mapbox://styles/mapbox/light-v9", 
+#                          layers=[layer], 
+#                          initial_view_state=view_state))
+
+
+
+# https://drive.google.com/file/d/1AZDR2F2vrBfw-f-l07Av-g1iXlz2alpG/view?usp=sharing
 
 
 
 
 
-# m = folium.Map(tiles='OpenStreetMap', location=[41.38716817075619, 2.170044811509568],zoom_start=2)
-# for country in test['Harvest_Country'].unique():
-#     lat,lon = l[country]['la'],l[country]['lon']
-#     # popup = folium.Popup(html_plot, max_width=400)
-#     folium.Marker([lat,lon],tooltip=country).add_to(m)
 
-# # folium.Marker([30,94],tooltip='XXXXXXXChina').add_to(m)
-# categories = ['A', 'B', 'C']
-# values = [10, 20, 15]
-# fig = px.bar(x=categories, y=values, title="Sample Bar Plot")
-# fig.write_html('./test.html')
 
-# html="""
-#     <iframe src=\"""" + './test.html' + """\" width="850" height="400"  frameborder="0">    
-#     """
-# popup = folium.Popup(html='./test.html', max_width=400)
-# iframe = folium.IFrame(html=open('./test.html','r').read(),width=400,height=300)
-# popup = folium.Popup(folium.Html(iframe))
-# # folium.Marker([30,110],tooltip='XXXXXXXChina',popup=popup).add_to(m)
 
-# d = st_folium(m, use_container_width=True)# height=700)# use_container_width=True)
+# file_id_shx = '1b-Gra1JVjxePqMzHCC7jyPyzcIY7GSc8'
+# file_id_shp = '1b2hAU5YNtWFZ6xiPBscqcyxw0Eb0d1ZH'  # Replace with your file ID
+# file_id_dbf = '1b4fDqoJW5Od_FgmoHEfZAa1duwdDf7Dt'
+# gdf = load_shape_file(file_id_shp,file_id_shx,file_id_dbf, service)
+# st.write('downloaded')
+
+
+# gdf['geometry'] = gdf['geometry'].simplify(0.01)
+# geo_json_simp = gdf.to_json()
+# st.write('tranformed to json and simplified')
+
+# m = folium.Map()
+# st.write('get map')
+
+# folium.GeoJson(geo_json_simp,name='geojson').add_to(m)
+# st.write('json to map')
+
 
