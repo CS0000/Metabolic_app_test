@@ -5,3 +5,6 @@ streamlit_folium
 st-gsheets-connection
 gspread
 st_ant_tree
+google-api-python-client
+geopandas
+pydeck
