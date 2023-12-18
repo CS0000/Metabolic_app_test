@@ -69,8 +69,8 @@ cred_path = './credentials.json'
 # all_C4 = test1.index.tolist()
 # all_col = test1.columns.tolist()
 
-with open('./geo_country_new.plk','rb') as f:
-    l = pickle.load(f)
+# with open('./geo_country_new.plk','rb') as f:
+#     l = pickle.load(f)
 
 
 def sheet_url_split(s_in):

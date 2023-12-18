@@ -43,6 +43,8 @@ tree_data_df = tree_data_df.loc[:,[i for i in tree_data_df.columns.tolist() if i
 pressure_new = pd.concat([tree_data_df,pressure],axis=1)
 # st.dataframe(pressure_new.head())
 
+# with st.expander('pressure data frame: '):
+#        st.dataframe(pressure_new.head())
 
 with st.container():
        value = st_ant_tree(treeData=tree_data, filterTreeNode= True, 
