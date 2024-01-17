@@ -47,7 +47,7 @@ data_load_state.text('Loading data... done!')
 
 
 def gerate_map(data):
-    m = folium.Map(zoom_start=12)
+    m = folium.Map(zoom_start=3)
     folium.GeoJson(data).add_to(m)
     # data_load_state.text('map object m done')
     st_folium(m,width=1200,height=700,zoom=8)

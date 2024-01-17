@@ -102,46 +102,46 @@ def read_credentials_sheet(sheet_name, worksheet_id):
     return df
 
 
-cate_cols = ['Category_L1', 'Category_L2', 'Category_L3', 'Category_L4']
-def build_tree(df, current_level, max_level, path='', new_df=None):
-    if current_level == 0:
-        # Initialize the new DataFrame with the same index as the original
-        new_df = pd.DataFrame(index=df.index)
+# cate_cols = ['Category_L1', 'Category_L2', 'Category_L3', 'Category_L4']
+# def build_tree(df, current_level, max_level, path='', new_df=None):
+#     if current_level == 0:
+#         # Initialize the new DataFrame with the same index as the original
+#         new_df = pd.DataFrame(index=df.index)
     
-    if current_level >= max_level:
-        return [], new_df
+#     if current_level >= max_level:
+#         return [], new_df
 
-    next_level = current_level + 1
-    tree = []
+#     next_level = current_level + 1
+#     tree = []
 
-    category_col = f'Category_L{current_level + 1}'
-    title_col = f'{category_col}_Title'
+#     category_col = f'Category_L{current_level + 1}'
+#     title_col = f'{category_col}_Title'
 
-    for index, item in enumerate(df[cate_cols[current_level]].unique()):
-        if pd.notna(item):
-            # Create a path label with leading numbers
-            new_path = f'{path}{index:02d}_'
+#     for index, item in enumerate(df[cate_cols[current_level]].unique()):
+#         if pd.notna(item):
+#             # Create a path label with leading numbers
+#             new_path = f'{path}{index:02d}_'
 
-            # Filter the DataFrame for the current category item
-            filtered_df = df[df[cate_cols[current_level]] == item]
+#             # Filter the DataFrame for the current category item
+#             filtered_df = df[df[cate_cols[current_level]] == item]
             
-            # Recursive call to build children and update new DataFrame
-            children, new_df = build_tree(filtered_df, next_level, max_level, new_path, new_df)
+#             # Recursive call to build children and update new DataFrame
+#             children, new_df = build_tree(filtered_df, next_level, max_level, new_path, new_df)
 
-            # Add category and title information to the new DataFrame
-            new_df.loc[filtered_df.index, category_col] = item
-            new_df.loc[filtered_df.index, title_col] = f'{new_path}{item} ({cate_cols[current_level]})'
+#             # Add category and title information to the new DataFrame
+#             new_df.loc[filtered_df.index, category_col] = item
+#             new_df.loc[filtered_df.index, title_col] = f'{new_path}{item} ({cate_cols[current_level]})'
 
-            node = {
-                'value': f'{new_path}{item} ({cate_cols[current_level]})',
-                'title': item,
-                'children': children
-            }
-            if not node['children']:
-                del node['children']
-            tree.append(node)
+#             node = {
+#                 'value': f'{new_path}{item} ({cate_cols[current_level]})',
+#                 'title': item,
+#                 'children': children
+#             }
+#             if not node['children']:
+#                 del node['children']
+#             tree.append(node)
 
-    return tree, new_df
+#     return tree, new_df
 
 
 class pressureHome:

@@ -24,27 +24,27 @@ def pie_chart(df,gp_bin = False, gp='HICL',topn=0,
 
 
 
-sheet_id = '1TK83ei6J6bmQRyo-2nd-N1UPbUbXtgMldmtrwS2rcSA'
-df_id = 'df_RA_fianl'
-lookup_id = 'HICL%20Lookup'
-oil_id = 'Oils%20Lookup'
-df_fig_in_id = 'df_RA_final_HICL_splitCountry'
-WORK_SHEET_NAME = 'Included_Ingredients'
-
 # url_df = f"https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet={df_id}"
 # url_match = f"https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet={lookup_id}"
 # url_df_fig_in = f"https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet={df_fig_in_id}"
 
 # print(url_df_fig_in)
 # df_RA_final_HICL_splitCountry = pd.read_csv(url_df_fig_in)
+
+WORK_SHEET_NAME = 'Included_Ingredients'
+
+# build connection and load google spreadsheet as dataframe
 conn2 = st.connection("gsheets2",type=GSheetsConnection)
 df_RA_final_HICL_splitCountry = conn2.read(worksheet=WORK_SHEET_NAME)
 
+# show the first 5 lines of the loaded datatrame
 with st.expander('USfood data frame (Included_Ingredients): '):
        st.dataframe(df_RA_final_HICL_splitCountry.head())
 
 cols = ['HICL','Merch Category','PIM Group','Net Weight Received (lb)',
         'Country of Origin','Product Description']
+
+
 df = df_RA_final_HICL_splitCountry.loc[:,cols]
 df = df.loc[(df['HICL'].notnull())&(df['HICL']!=''),:]
 
