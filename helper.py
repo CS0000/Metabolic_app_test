@@ -13,7 +13,6 @@ from streamlit_gsheets import GSheetsConnection
 
 
 
-
 color_map = {'Agave': '#d5de81',
              'Aniseed': '#CCAB62',
              'Barley':'#fccb7d',
@@ -56,33 +55,23 @@ metabolic_template = dict(layout=go.Layout(font_family='Roboto',
 metabolic_colors_20 = ['#a63246' ,'#e56e61' ,'#ea9243' ,'#ffc840' ,'#789b40' ,'#bdd576','#f6e67f' ,'#2db77f' ,'#61c6c0' ,'#61cbe8' ,'#d87fae' ,'#9772a3' ,'#1f6585' ,'#b6517f' ,'#a89778' ,'#eae4b1' ,'#a2a9ad' ,'#a65b4a' ,'#82766a' ,'#797c82']
 metabolic_colors_40 = ['#a63246' ,'#cd3e49' ,'#e56e61' ,'#d16d29' ,'#ea9243' ,'#d8a83b' ,'#ffc840' ,'#5f8943' ,'#789b40' ,'#87bf65' ,'#bdd576' ,'#e2e26a' ,'#f6e67f' ,'#288e5b' ,'#2db77f' ,'#43a89a' ,'#61c6c0' ,'#a9dde3' ,'#61cbe8' ,'#60adcd' ,'#d87fae' ,'#a4a9d5' ,'#9772a3' ,'#775285' ,'#1f6585' ,'#2e839e' ,'#b6517f' ,'#a09256' ,'#a89778' ,'#c4b36a' ,'#eae4b1' ,'#f5f3ea' ,'#a2a9ad' ,'#b7744f' ,'#a65b4a' ,'#7b5d52' ,'#82766a' ,'#8c9380' ,'#797c82']
 
+
+
+def df_input_form():
+    with st.form("input"):
+        st.write("locate to your data:")
+        c1, c2 = st.columns(2)
+        with c1:
+                C1 = st.text_input('Please enter the unique sheet code', '')
+        with c2:
+                C2 = st.text_input('Please enter the work sheet name', '')
+        # SHEET_CODE = st.text_input('Please enter the unique sheet code', '')
+        # WORK_SHEET_NAME  = st.text_input('Please enter the work sheet name', '')
+        submitted = st.form_submit_button("Submit")
+    return C1,C2,submitted
+
+# for local testing only
 cred_path = './credentials.json'
-
-
-# load data
-# p = pd.read_csv('./Phase1_processed_dataset_pressures - Long_data_with_pressures_v2.csv')
-# test = p.loc[:,['Category_L4_LCA','Quantity', 'Land Use (m2)','Land Transformation (m2)','Water Use (m3)','Soil Pollution (kg SO2 eq)', 'Water Pollution (kg P eq)',]]
-
-
-# test1 = test.groupby(['Category_L4_LCA']).sum() # Harvest_Country
-# test1_ra = test1.div(test1.sum(axis=0),axis=1).reset_index() 
-# all_C4 = test1.index.tolist()
-# all_col = test1.columns.tolist()
-
-# with open('./geo_country_new.plk','rb') as f:
-#     l = pickle.load(f)
-
-
-def sheet_url_split(s_in):
-    sheet_id = s_in.split('https://docs.google.com/spreadsheets/d/')[1].split('/')[0]
-    return sheet_id
-
-def read_sheet(sheet_id,sheet_name):
-    sheet_name = sheet_name.replace(' ','%20')
-    url_df = f"https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet={sheet_name}"
-    df = pd.read_csv(url_df,engine='python')
-    return df
-
 @st.cache_resource()
 def get_google_sheet_connection(sheet_name):
     with open(cred_path) as j_f:
@@ -144,17 +133,6 @@ def read_credentials_sheet(sheet_name, worksheet_id):
 #     return tree, new_df
 
 
-class pressureHome:
-    def __init__(self,path):
-        self.path = path
-        self.df = pd.read_csv(self.path)
 
-    def sliceCol(self, col = []):
-        self.df = self.df.loc[:,col]
-        # return self.df
-    
-    def lookupCol(self,col=None):
-        self.df_gb = self.df.groupby([col]).sum()
-        self.df_gb_ra = self.df_gb.div(self.df_gb.sum(axis=0),axis=1).reset_index() 
     
         
