@@ -1,11 +1,11 @@
 from helper import *
 from folium import Popup
 import plotly.express as px
-import vincent
+# import vincent
 import streamlit as st
 import requests
 import numpy as np
-from altair import *
+# from altair import *
 from shapely.geometry import shape
 import branca
 # from google.oauth2 import service_account

@@ -8,3 +8,5 @@ st_ant_tree
 google-api-python-client
 geopandas
 pydeck
+shapely
+branca
