@@ -38,16 +38,16 @@ else:
                 country_col = st.selectbox("indicate the column for country names",
                                             df.columns.tolist())
             with c2:
-                colored_col = st.selectbox("indicate the column for numerical colors",
+                colored_col = st.selectbox("indicate the numerical column for coloring",
                                             df.columns.tolist())
-            # with c3:
-            #     st.text("define what's in the pop-up window of each country point")
-            #     x = st.selectbox("indicate the column for numerical colors",
-            #                                 df.columns.tolist())
+                st.text("summarize each country by sum or mean ?")
+                func_groupby = st.selectbox("indicate sum or mean",
+                                 ['sum','mean'])
+
             # with c4:
             #      x2 = st.selectbox("indicate the column for numerical colors",
             #                                 df.columns.tolist())
-
+            st.warning("If error raised after submitting, check whether the country column is correct. ")
             submitted = st.form_submit_button("Submit")
 
             if submitted:
@@ -65,7 +65,12 @@ else:
                 # df_country
                 df_country = df.loc[:,[country_col,colored_col]]
                 df_country[colored_col] = df[colored_col].apply(pd.to_numeric, errors='coerce')
-                df_country = df_country.groupby([country_col]).sum()
+                if func_groupby == 'sum':
+                    df_country = df_country.groupby([country_col]).sum()
+                if func_groupby == 'mean':
+                    df_country = df_country.groupby([country_col]).mean()
+                else:
+                    df_country = df_country.groupby([country_col]).sum() # default is sum
                 df_country = df_country.reset_index()
                 # adjust country name for df_country
                 country_ = []
@@ -97,6 +102,7 @@ else:
 
                 m = folium.Map(location=(30, 10), zoom_start=3, tiles="cartodb positron")
                 # folium.GeoJson(political_countries_url).add_to(m)
+                
                 folium.Choropleth(
                     geo_data=political_countries_url,
                     data=df_country,
@@ -105,20 +111,21 @@ else:
                     fill_color= "RdYlGn_r",
                     line_opacity=0.3,
                     nan_fill_color='white',
-                    legend_name='XXXX'
+                    legend_name=f'{colored_col}'
                 ).add_to(m)
                 
                 # marker pop up
+                fg_country = folium.FeatureGroup(name=f'country level of {colored_col}',show=False).add_to(m)
                 for i in df_country[country_col].tolist():
                     la = df_country.loc[df_country[country_col]==i,'geo_center'].values[0][1]
                     lon = df_country.loc[df_country[country_col]==i,'geo_center'].values[0][0]
-                    folium.Marker([la,lon], popup=i).add_to(m)
+                    folium.Marker([la,lon], popup=i).add_to(fg_country)
                 # folium.Marker([30,10], popup='teset test').add_to(m)
 
 
                 x = np.arange(10)
-                fig = go.Figure(data=[go.Scatter(x=x, y=x**2),
-                                      go.Scatter(x=x,y=x)])
+                fig = go.Figure(data=[go.Scatter(x=x, y=x**2,line=dict(color='royalblue')),
+                                      go.Scatter(x=x,y=x,line=dict(color='red'))])
                 # df = px.data.gapminder().query("continent=='Oceania'")
                 # fig = px.line(df, x="year", y="lifeExp", color='country')
                 fig.update_layout(margin=dict(t=20,l=20,b=20,r=20))
@@ -129,9 +136,11 @@ else:
 
                 folium.Marker([0,0], popup=popup,icon=folium.Icon(color='green')).add_to(m)
 
+                folium.LayerControl().add_to(m)
 
-
-                st_data = st_folium(m,width=1200,height=1200)
+                
+                st.warning("The points on the map only indicate the country's name for now. The pop up window of each point is still under development. Click the green point to see the demo of a possible content of pop up window. ")
+                st_data = st_folium(m,width=1200,height=1000)
 
 
             

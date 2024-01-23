@@ -34,15 +34,23 @@ else:
               st.dataframe(pressure.head())
 
 
-       with st.expander("Selecting columns"):
+       with st.expander("Tree-structured filtering bar chart"):
+              st.markdown("""
+                     **expected input**: wide datasets, selecting columns below.        
+                     **expected output**: select columns to be shown on the X axis and column to be :rainbow[colored].
+                          """)
+              st.image('./data/demo_stacked_bar_chart.png',width=600,caption="expected output of bar view")
+
               index_cols = st.multiselect(
-                     'Which columns are going to be indexes shown in the X axis?',
-                     pressure.columns.tolist())
+              """Multiple columns selection here. (selection single column is also fine, but only one index will shown on the plot.)        
+              Which columns are going to be indexes shown in the X axis?""",
+              pressure.columns.tolist()
+              )
 
               cate_cols = st.multiselect(
-              "Multiple columns selection here. \
-              There will be tree-structrued filtering based on your selection. Make sure the selections are ordered. \
-              e.g. L1, L2, L3 (L1 is the largest category while L3 is the most detailed)",
+              """Multiple or single columns selection here.         
+              There will be tree-structrued filtering based on your selection. If multiple columns are selected, make sure the selections are ordered. \
+              e.g. L1, L2, L3 (L1 is the largest category while L3 is the most detailed, the bar will be :rainbow[colored] by L3)""",
               pressure.columns.tolist()
               )
 

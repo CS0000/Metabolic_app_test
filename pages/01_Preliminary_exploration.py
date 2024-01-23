@@ -41,7 +41,14 @@ else:
               st.dataframe(pressure.head())
 
 
-       with st.form("Select columns for overall bar & pie plots"):
+       with st.form("Overall bar & pie plots"):
+              st.markdown("""
+                     ### Overall bar & pie plots
+                     **expected input**: wide datasets, selecting columns below.        
+                     **expected output**: select columns to be shown on the X axis and value to be shown on Y axis.
+                          """)
+              st.image('./data/demo_overall_chart.png',width=600,caption="expected output of overall bar plot")
+
               index_col = st.selectbox(
                      'Which numerical column is going to be shown in the Y axis?',
                      pressure.columns.tolist())
@@ -71,18 +78,23 @@ else:
                   st.write("  \n")
                   st.write("  \n")
 
-       with st.form("Select columns for breakdown pie plots"):
+       with st.form("Breakdown pie plots"):
             # breakdown HICL- PIM Group and Merch Category
+            st.markdown("""
+                       ### Breakdown pie plots      
+                       Same as overall plot, but add a breakdown column selection.     
+                       The pie plot will be :rainbow[colored] based on your selection yin the third box, but you can filter the data by a larger category first via the second selection box.       
+                            """)
             index_col = st.selectbox(
-                     'Which numerical column is going to be shown in the Y axis?',
+                     'Which numerical column is going to be value in the pie chart?',
                      pressure.columns.tolist())
             cate_col = st.selectbox(
                      'Which categorical column is going to be breakdown?',
                      pressure.columns.tolist())
             break_cate_col = st.selectbox(
-                     'Which categorical column is going to be shown in the X axis?',
+                     'Which categorical column is going to be :rainbow[colored] in the pie chart?',
                      pressure.columns.tolist())
-         
+            
 
             # df = pressure.loc[(pressure[cate_col].notnull())&(pressure[cate_col]!=''),:]
             # select_list = st.multiselect(

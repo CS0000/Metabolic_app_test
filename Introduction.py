@@ -3,10 +3,15 @@ from helper import *
 
 st.header('Welcom to Interactive Visualization Tool (demo)')
 st.subheader("from Agrifood & Biodiversity team")
-st.write("This interative visualization tool is designed to self-service exploratory data analysis, allowing consultants and clients to explore the sustainability data under different angles and levels of aggregations, supporting the implementation of SBTN framework")
+st.write("This interative visualization tool is designed to self-service exploratory data analysis, allowing consultants and clients to explore the sustainability data under different angles and levels of aggregations, supporting the implementation of SBTN framework.")
 
-st.markdown("""
-**Bar view page**: visualize pressure dataset to be bar plots
+st.info("""
+**Preliminary exploration page**:            
+            Customize your overview of the data with bar chart and pie chart. Breakdown certian columns to obtain a pie chart with more details.        
+**Bar view page**:        
+            visualize pressure dataset to be bar charts, flexible to customize and filtering the datasets in a tree-structured manner.            
+**Map view page**:            
+                     
 """)
 # annotated_text(('commoditiy1','group1','#d5de81'))
 # annotated_text(('commoditiy2','group1','#fccb7d'))
