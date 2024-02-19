@@ -139,7 +139,7 @@ else:
                         bar_data = []
                         for ind,i in enumerate(test1_ra[local_cate_col].unique()):
                             bar_data.append(
-                                    go.Bar(name=i, x=local_impacts_col,customdata = str(i) * len(local_cate_col),
+                                    go.Bar(name=i, x=local_impacts_col,customdata = [i for ii in range(len(local_cate_col))],
                                             y=test1_ra.loc[test1_ra[local_cate_col]==i,local_impacts_col].iloc[0,:].tolist(),
                                             marker_color = cc[i], # metabolic_colors_40[ind],
                                             hovertemplate = "%{customdata}: <br> %{x} </br> percentage: %{y} "
