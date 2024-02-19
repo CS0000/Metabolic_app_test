@@ -139,10 +139,10 @@ else:
                         bar_data = []
                         for ind,i in enumerate(test1_ra[local_cate_col].unique()):
                             bar_data.append(
-                                    go.Bar(name=i, x=local_impacts_col, 
+                                    go.Bar(name=i, x=local_impacts_col,n = i * len(local_cate_col),
                                             y=test1_ra.loc[test1_ra[local_cate_col]==i,local_impacts_col].iloc[0,:].tolist(),
                                             marker_color = cc[i], # metabolic_colors_40[ind],
-                                            hovertemplate = "%{name}: <br> %{x} </br> percentage: %{y} "
+                                            hovertemplate = "%{n}: <br> %{x} </br> percentage: %{y} "
                                                     ))
                         fig = go.Figure(data = bar_data)
                         fig.update_layout(barmode='stack')
