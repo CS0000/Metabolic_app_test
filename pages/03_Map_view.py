@@ -151,9 +151,9 @@ else:
                                     yaxis_title='%',
                                     font=dict(size=10),
                                     template=metabolic_template,
-                                    title=f'{country}'
+                                    title=f'{country}',
+                                    legend_title_text=f'{local_cate_col}'
                                     # margin=dict(l=10, r=10, t=10, b=10)
-                                    # name='My Legend Name'
                                     )
                         html = fig.to_html(include_plotlyjs='cdn')
                         iframe = branca.element.IFrame(html=html, width=500, height=300)
