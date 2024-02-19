@@ -37,19 +37,20 @@ else:
        with st.expander("Tree-structured filtering bar chart"):
               st.markdown("""
                      **expected input**: wide datasets, selecting columns below.        
-                     **expected output**: select columns to be shown on the X axis and column to be :rainbow[colored].
+                     **expected output**: show contribution of commodities for multiple impacts
                           """)
-              st.image('./data/demo_stacked_bar_chart.png',width=600,caption="expected output of bar view")
+              st.image('./data/demo_treeBar_1.png',caption="expected output of bar view")
 
+              annotated_text(('Selecting impacts','','#EDC6AF'))
               index_cols = st.multiselect(
-              """Multiple columns selection here. (selection single column is also fine, but only one index will shown on the plot.)        
-              Which columns are going to be indexes shown in the X axis?""",
+              """Multiple columns selection. (selection single column is also fine, but only one bar on the plot.) """,
               pressure.columns.tolist()
               )
 
+              annotated_text(('Selecting commodity categories: Tree-structured filtering','','#9FD77F'))
               cate_cols = st.multiselect(
-              """Multiple or single columns selection here.         
-              There will be tree-structrued filtering based on your selection. If multiple columns are selected, make sure the selections are ordered. \
+              """Multiple or single selection here.         
+              There will be tree-structrued filtering based on your selection. If multiple columns are selected, make sure the selections are ordered.          
               e.g. L1, L2, L3 (L1 is the largest category while L3 is the most detailed, the bar will be :rainbow[colored] by L3)""",
               pressure.columns.tolist()
               )

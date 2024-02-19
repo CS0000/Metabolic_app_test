@@ -45,15 +45,15 @@ else:
               st.markdown("""
                      ### Overall bar & pie plots
                      **expected input**: wide datasets, selecting columns below.        
-                     **expected output**: select columns to be shown on the X axis and value to be shown on Y axis.
+                     **expected output**: Overall bar chart and pie chart based on selected columns representing impact or quantities and commodity category level
                           """)
-              st.image('./data/demo_overall_chart.png',width=600,caption="expected output of overall bar plot")
+              st.image('./data/demo_overall_chart.png',caption="expected output of overall bar plot")
 
               index_col = st.selectbox(
-                     'Which numerical column is going to be shown in the Y axis?',
+                     'Please select the impact or quantities: ',
                      pressure.columns.tolist())
               cate_col = st.selectbox(
-                   'Which categorical column is going to be shown in the X axis?',
+                   'Please select the commodity category level: ',
                    pressure.columns.tolist()
               )
 
@@ -83,16 +83,24 @@ else:
             st.markdown("""
                        ### Breakdown pie plots      
                        Same as overall plot, but add a breakdown column selection.     
-                       The pie plot will be :rainbow[colored] based on your selection yin the third box, but you can filter the data by a larger category first via the second selection box.       
-                            """)
+                       Users can break down certain categories and see detailed contributions of the impact/quantities within this category
+                        """)
+            st.image('./data/demo_breakdown_chart.png',output_format='PNG',
+                     caption="expected output of breakdown bar plot")
+            
+            annotated_text(('Quantity or impacts','','#EF8BF9'))
             index_col = st.selectbox(
-                     'Which numerical column is going to be value in the pie chart?',
+                     'Please select the value to be shown in the bar chart: ',
                      pressure.columns.tolist())
+            
+            annotated_text(('Larger category','','#0096FF'))
             cate_col = st.selectbox(
-                     'Which categorical column is going to be breakdown?',
+                     'Please select larger category: ',
                      pressure.columns.tolist())
+            
+            annotated_text(('Detailed category','','#FFD579'))
             break_cate_col = st.selectbox(
-                     'Which categorical column is going to be :rainbow[colored] in the pie chart?',
+                     'Please select the detailed category for breakdown: ',
                      pressure.columns.tolist())
             
 
@@ -104,7 +112,6 @@ else:
             # df_select = pressure.loc[pressure[cate_col].isin(select_list),:]
 
             # breakdown pie plot
-            
 
             submitted = st.form_submit_button("Submit selection")
             if submitted:
