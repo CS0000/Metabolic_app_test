@@ -159,7 +159,7 @@ else:
                         iframe = branca.element.IFrame(html=html, width=500, height=300)
                         popup = folium.Popup(iframe, max_width=500)
 
-                        if test1_ra.shape[0]>1:
+                        if test1_ra.shape[0]>=1:
                             folium.Marker([la,lon], popup=popup).add_to(fg_country)
                 # folium.Marker([30,10], popup='teset test').add_to(m)
 
