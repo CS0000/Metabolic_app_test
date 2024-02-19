@@ -141,7 +141,8 @@ else:
                             bar_data.append(
                                     go.Bar(name=i, x=local_impacts_col, 
                                             y=test1_ra.loc[test1_ra[local_cate_col]==i,local_impacts_col].iloc[0,:].tolist(),
-                                            marker_color = cc[i] # metabolic_colors_40[ind]
+                                            marker_color = cc[i], # metabolic_colors_40[ind],
+                                            hovertemplate = "%{i}: <br>percentage: %{y} </br> %{x}"
                                                     ))
                         fig = go.Figure(data = bar_data)
                         fig.update_layout(barmode='stack')
