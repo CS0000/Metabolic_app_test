@@ -54,3 +54,4 @@ A demonstrated selections can be found blow. The map will be colored by SBTN wat
 
 
 ## Instruction video
+[![app demo](https://i9.ytimg.com/vi_webp/Dh7v-IVBCPw/mq3.webp?sqp=CNDyyK8G-oaymwEmCMACELQB8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGHIgTihDMA8=&rs=AOn4CLC1pFJqJLF9YLdtVm6dXb3rDkwjZA)](https://youtu.be/Dh7v-IVBCPw)
